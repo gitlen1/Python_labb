@@ -1,65 +1,57 @@
 import argparse
 import json
 
-def new(guestbooklist):
-    print("Add a new note...")
-    nNote = input("This is my note ")
-    guestbooklist.append(nNote)
+def load_guestbook(filename):
+    try:
+        with open(filename, 'r') as f:
+            return json.load(f)
+    except FileNotFoundError:
+        return []
 
-def list_notes(guestbooklist):
-    print("Printing all entries in the guestbook...")
-    for i in range(len(guestbooklist)):
-        print(guestbooklist[i])
+def save_guestbook(filename, guestbook):
+    with open(filename, 'w') as f:
+        json.dump(guestbook, f, indent=4)
 
-def edit(guestbooklist, edit_number):
-    print("Change the note...")
-    cNote = input("Enter the new note >>> ")
-    guestbooklist[-edit_number] = cNote
+def new_guestbook_entry(guestbook, note):
+    guestbook.append(note)
 
-def delete(guestbooklist):
-    guestbooklist.pop() 
-    print("Deleted the latest note.")
+def list_guestbook_entries(guestbook):
+    for note in guestbook:
+        print(note)
 
-def export(guestbooklist):
-    guestbook_dict = {i+1: guestbooklist[i] for i in range(len(guestbooklist))}
-    guestbook_json = json.dumps(guestbook_dict, indent=4)
-    print(guestbook_json)
+def edit_guestbook_entry(guestbook, index, note):
+    guestbook[index] = note
 
-def guestbook():
-    parser = argparse.ArgumentParser(description='Guestbook Manager CLI')
-    subparsers = parser.add_subparsers(dest='command')
+def delete_guestbook_entry(guestbook, index):
+    del guestbook[index]
 
-    new_parser = subparsers.add_parser('new', help='Add a new note')
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser()
+    parser.add_argument('command', choices=['new', 'list', 'edit', 'delete', 'export'])
+    parser.add_argument('args', nargs='*')
+    parser.add_argument('--filename', default='guestbook.json')
+    args = parser.parse_args()
 
-    list_parser = subparsers.add_parser('list', help='Print all entries in the guestbook')
+    guestbook = load_guestbook(args.filename)
 
-    edit_parser = subparsers.add_parser('edit', help='Change the third newest note')
-    edit_parser.add_argument('edit_number', type=int, help='Specify the index of the note to edit')
+    if args.command == 'new':
+        note = ' '.join(args.args)
+        new_guestbook_entry(guestbook, note)
 
-    delete_parser = subparsers.add_parser('delete', help='Delete the latest note')
+    elif args.command == 'list':
+        list_guestbook_entries(guestbook)
 
-    export_parser = subparsers.add_parser('export', help='Export the guestbook as a JSON file')
+    elif args.command == 'edit':
+        index, note = args.args
+        index = int(index)
+        edit_guestbook_entry(guestbook, index, note)
 
-    quit_parser = subparsers.add_parser('quit', help='Exit the program')
+    elif args.command == 'delete':
+        index = int(args.args[0])
+        delete_guestbook_entry(guestbook, index)
 
-    guestbooklist = []
+    elif args.command == 'export':
+        with open(args.filename, 'w') as f:
+            json.dump(guestbook, f, indent=4)
 
-    while True:
-        args = parser.parse_args(input().split())
-        if args.command == 'new':
-            new(guestbooklist)
-        elif args.command == 'list':
-            list_notes(guestbooklist)
-        elif args.command == 'edit':
-            edit(guestbooklist, args.edit_number)
-        elif args.command == 'delete':
-            delete(guestbooklist)
-        elif args.command == 'export':
-            export(guestbooklist)
-        elif args.command == 'quit':
-            break
-        else:
-            print('Invalid command')
-
-if __name__ == "__main__":
-    guestbook()
+    save_guestbook(args.filename, guestbook)
