@@ -1,4 +1,4 @@
-project: develop a database solution
+# project: Develop a database solution
 
 Our customer have commissioned us to develop a solution for their need to save data from their applications. The applications they use are mostly written in python, so we've decided to write a python library for them to address the issue of writing and reading application data to disk.
 
