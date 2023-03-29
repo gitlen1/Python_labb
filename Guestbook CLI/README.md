@@ -9,16 +9,16 @@ You should name your main python file guestbook.py.
 
 Here are the commands you need to implement:
 
-- guestbook.py new "This is my note"
-This command adds a new note with the content "This is my note"
+- guestbook.py new "This is my note": 
+ This command adds a new note with the content "This is my note"
 
-- guestbook.py list
-This command prints all the entries in the guestbook
+- guestbook.py list: 
+ This command prints all the entries in the guestbook
 
-- guestbook.py edit 3 "Change the note"
-This command changes the 3rd newest note's content to "Change the note"
+- guestbook.py edit 3 "Change the note": 
+ This command changes the 3rd newest note's content to "Change the note"
 
-- guestbook.py delete 1
-This command deletes the most recent note
+- guestbook.py delete 1: 
+ This command deletes the most recent note
 
 - implement the command guestbook.py export that prints the contents of the guestbook in json format
