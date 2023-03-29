@@ -20,10 +20,10 @@ def list_guestbook_entries(guestbook):
         print(note)
 
 def edit_guestbook_entry(guestbook, index, note):
-    guestbook[index] = note
+    guestbook[-index] = note
 
 def delete_guestbook_entry(guestbook, index):
-    del guestbook[index]
+    del guestbook[-index]
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
