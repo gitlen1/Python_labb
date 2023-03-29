@@ -21,4 +21,4 @@ This command changes the 3rd newest note's content to "Change the note"
 - guestbook.py delete 1
 This command deletes the most recent note
 
--implement the command guestbook.py export that prints the contents of the guestbook in json format
+- implement the command guestbook.py export that prints the contents of the guestbook in json format
