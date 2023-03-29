@@ -4,12 +4,18 @@ Our customer have commissioned us to develop a solution for their need to save d
 
 The project have the following requirements:
 
-it should allow python code to save python objects (of type dict) to a single file to disk.
-it should allow python code to fetch objects saved to file
-each object saved to the DB should be accessible via a key (of type str)
-it should be easily installable via PIP (but the code should not be committed to pypi)
-it should be well-documented (docstrings and a README.md showing how to use the library)
-there should be unit tests in place, and the code should have high enough coverage
+- it should allow python code to save python objects (of type dict) to a single file to disk.
+
+- it should allow python code to fetch objects saved to file
+
+- each object saved to the DB should be accessible via a key (of type str)
+
+- it should be easily installable via PIP (but the code should not be committed to pypi)
+
+- it should be well-documented (docstrings and a README.md showing how to use the library)
+
+- there should be unit tests in place, and the code should have high enough coverage
+
 The whole project will be divided into 2 1-week sprints.
 
 As a team discuss the backlog and plan what to tackle on sprint 1, and what to postpone to sprint 2.
