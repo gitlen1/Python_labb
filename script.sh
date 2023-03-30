@@ -1,8 +1,5 @@
 #!/bin/bash
 
-echo "First argument: $1"
-echo "Second argument: $2"
-
 if [ "$#" -ne 2 ]; then
   echo "Usage: $0 letter directory" >&2
   exit 1
