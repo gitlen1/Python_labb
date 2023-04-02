@@ -1,0 +1,16 @@
+all:
+  hosts:
+    server-01:
+      ansible_host: 192.168.56.10
+      ansible_user: vagrant
+      ansible_ssh_private_key_file: .vagrant/machines/default/virtualbox/private_key
+  # children:
+  #   webservers:
+  #     hosts:
+  #       foo.example.com:
+  #       bar.example.com:
+  #   dbservers:
+  #     hosts:
+  #       one.example.com:
+  #       two.example.com:
+  #       three.example.com:

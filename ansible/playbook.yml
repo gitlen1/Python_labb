@@ -1,0 +1,77 @@
+---
+- name: system updates
+  hosts: all
+  become: yes
+
+  tasks:
+  # apt update && apt upgrade -y
+  - name: update all packages
+    ansible.builtin.apt:
+      name: '*'
+      state: latest
+      update_cache: yes
+
+- name: firewall setup
+  hosts: all
+  become: yes
+
+  tasks:
+  - name: install firewall (ufw)
+    ansible.builtin.apt: 
+      name: ufw
+      state: present
+
+  
+  - name: start and enable ufw.service
+    ansible.builtin.systemd_service:
+     name: ufw.service
+     state: started
+     enabled: yes
+
+  - name: enable firewall
+    community.general.ufw:
+      state: enabled
+
+  - name: open ssh port 22 on firewall
+    community.general.ufw:
+      to_port: 22
+      rule: allow
+
+
+  - name: set default incoming policy
+    community.general.ufw:
+      default: deny
+      direction: incoming
+
+  - name: set default outgoing firewall policy
+    community.general.ufw:
+      default: allow
+      direction: outgoing
+
+- name: users & groups
+  hosts: all
+  become: yes
+
+  tasks:
+  - name: create user ilyas
+    ansible.builtin.user:
+      name: ilyas
+      password: $6$KY5BMCD/mxjlE47t$TZhjdLgBznLXZza0jqut7H21k3Jk7/VbPUxCkJTJmntvNlMy69dixQZREGcXHRMxmNAJwgzQaNth8h6er14Eg1 
+      state: present
+      create_home: yes
+      shell: /usr/bin/bash
+
+  - name: add pubkey to user ilyas
+    ansible.posix.authorized_key:
+      user: ilyas
+      state: present
+      key: "{{ lookup('file', './ilyas.pubkey') }}"
+
+  - name: give ilyas sudo permission
+    community.general.sudoers:
+      name: give ilyas sudo permission
+      user: ilyas
+      state: present
+      commands: ALL
+
+
