@@ -11,7 +11,7 @@ import mysql.connector
 pet_user = mysql.connector.connect(
     host="localhost",
     user="root",
-    password="2195",
+    password="1234",
     database="pet"
 )
 
